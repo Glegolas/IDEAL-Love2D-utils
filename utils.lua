@@ -6,7 +6,7 @@
     local print    = print
     local tostring = tostring
     local getmetatable = getmetatable
-    local min, max = math.min, math.max
+    local min, max, sqrt = math.min, math.max, math.sqrt
 --\\
 --//love
     --@filesystem
@@ -144,30 +144,30 @@ local function Sign(val)
     return (val > 0 and 1) or (val < 0 and -1) or val
 end
 
-local function IsPointOnRectangle(x, y, rx, ry, rw, rh)
+local function IsPointOnRect(x, y, rx, ry, rw, rh)
     return (x >= rx and x <= rx + rw and y >= ry and y <= ry + rh)
 end
 
 local function IsPointOnCircle(x, y, cx, cy, cr)
-    return
+    return sqrt((x-cx)^2+(y-cy)^2) <= cr 
 end
 
-local function IsRectangleOnRectangle(x1, y1, w1, h1, x2, y2, w2, h2)
-    return
+local function IsRectOnRect(x1, y1, w1, h1, x2, y2, w2, h2)
+    return (x1 + w1 >= x2 and x1 <= x2 + w2 and y1 + h1 >= y2 and y1 <= y2 + h2)
 end
-
-print()
 
 --@thread | deliver
 return {
-    HandleKeyValuePair  = HandleKeyValuePair,
-    HandleOrderedList   = HandleOrderedList,
-    HandleFileDirectory = HandleFileDirectory,
-    Deepcopy            = Deepcopy,
-    Mixin               = Mixin,
-    Reverse             = Reverse,
-    ToStringTable       = ToStringTable,
-    Clamp               = Clamp,
-    Sign                = Sign,
-    IsPointOnRectangle  = IsPointOnRectangle
+    HandleKeyValuePair     = HandleKeyValuePair,
+    HandleOrderedList      = HandleOrderedList,
+    HandleFileDirectory    = HandleFileDirectory,
+    Deepcopy               = Deepcopy,
+    Mixin                  = Mixin,
+    Reverse                = Reverse,
+    ToStringTable          = ToStringTable,
+    Clamp                  = Clamp,
+    Sign                   = Sign,
+    IsPointOnRect          = IsPointOnRect,
+    IsPointOnCircle        = IsPointOnCircle,
+    IsRectOnRect           = IsRectOnRect
 }
